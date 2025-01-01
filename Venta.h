@@ -10,7 +10,7 @@ private:
 
 	string nombre;
 	string cedula;
-	string fechaNacimiento;
+	string fechaNacimiento; 
 
 public:
 

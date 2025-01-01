@@ -5,7 +5,7 @@
 #include <ctime>
 
 using namespace std;
-
+ 
 class Descuento
 {
 private:
@@ -13,19 +13,21 @@ private:
 	int porcentaje;
 	int cantidad;
 	string contrasenia;
-	bool descuentoAplicado;
+	bool descuentoAplicado; 
+	bool descuentoAprobado = false; 
+	int precioSegmentoActual;
 
   
 
 public:
-
+	    
 	Descuento();
   
+
     string generarContrasenia(int cantidad);
-	void obtenerContrasenia();
-	bool confirmarDescuento(int personaCompra);
-	float aplicarDescuento(float total, int personaCompra);
-	void mostrarDetallesdelDescuento();
+	void confirmarDescuento(int personaCompra, int precioSegmento);
+	float aplicarDescuento();
+	void IngresarDatosdelEvento();
 
 };
 

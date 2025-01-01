@@ -1,10 +1,9 @@
 #pragma once
-#include <iostream>
+#include <string>
 #include "Segmento.h"
-#include "Venta.h"
+#include "venta.h"
 #include "Descuento.h"
 
-using namespace std;
 class Evento
 {
 private:
@@ -12,20 +11,25 @@ private:
 	Segmento* segmentos;
 	int numeroSegmento;
 	int cantidadEspacios;
-	string NombreEvento;
+	string nombreEvento;
 	Venta venta;
 	Descuento descuento;
+	int cantidadPersonas;
+	int segmentoSeleccionado;
 
 public:
 
 	Evento();
+	~Evento();
 
-	void cantidadSegmento();
+	
+	void cantidadSegmento();//Datos del evento, cambiar nombre
 	void seleccionDeEntradas();
+	void descuentos();
 	void imprimirInformacionEvento();
+	void imprimirEstadoDeVentas();
 	void menu();
 
 
 
 };
-
