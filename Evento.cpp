@@ -49,7 +49,7 @@ void Evento::generarFactura() {
     cout << "------------------------- FACTURA -------------------------\n";
     cout << "Evento: " << nombreEvento << "\n";
     cout << "Comprador: " << venta.getNombreCliente() << "\n";
-    cout << "Cedula: " << venta.getCedulaCliente() << "\n\n";
+    cout << "Cedula: " << venta.getCedulaCliente() << "\n";
     cout << "Fecha Nacimiento: " << venta.getFechaNacimiento() << "\n";
 
     cout << "Desglose de las entradas vendidas:\n";
@@ -93,23 +93,34 @@ void Evento::venderEntradas() {
 
         imprimirEstadoDeVentas();
 
-        do {
+        bool seleccionValida = false;
+        
+        while (!seleccionValida) {
             cout << "\nSeleccione el segmento (1-" << numeroSegmento << "): ";
             cin >> segmentoSeleccionado;
 
+            
             if (segmentoSeleccionado < 1 || segmentoSeleccionado > numeroSegmento) {
                 cout << "\nSegmento invalido. Intentelo de nuevo.\n";
+                continue; 
             }
 
-        } while (segmentoSeleccionado < 1 || segmentoSeleccionado > numeroSegmento);
+        
+            if (segmentos[segmentoSeleccionado - 1].verificarEstadodeEntradas()) {
+                cout << "\nEl segmento seleccionado esta lleno. Intente con otro segmento.\n";
+                continue; 
+            }
 
+            seleccionValida = true;
+        }
 
-        segmentos[segmentoSeleccionado - 1].seleccionarEspacio();      
+        segmentos[segmentoSeleccionado - 1].seleccionarEspacio();
+        contadorEspacios++;
 
         string digitarContrasenia;
         bool descuentoExitoso = false;
 
-        for (int i = 0; i < 3; i++) 
+        for (int i = 0; i < 5; i++) 
         {
             if (cantidadPersonas <= descuento.getCantidad()) {
 
@@ -129,6 +140,7 @@ void Evento::venderEntradas() {
                 }
                 else {
                     cout << "\nContrasenia incorrecta, vuelva a intentar.\n";
+                    break;
                 }
 
             }
@@ -140,8 +152,9 @@ void Evento::venderEntradas() {
 
         contadorEspacios++;
         if (contadorEspacios < 5) {
-            cout << "\nDesea seguir comprando (s/n): ";
+            cout << "\nDesea seguir comprando (s/n):\n ";
             cin >> continuaComprando;
+            system("CLS");
         }
         else {
             cout << "\nHa alcanzado el máximo de 5 entradas permitidas.\n";

@@ -11,7 +11,6 @@ class Evento
 private:
 
 	Segmento* segmentos;
-	Segmento segmento1;
 	int numeroSegmento;
 	int cantidadEspacios;
 	string nombreEvento;
@@ -30,7 +29,6 @@ public:
 	void generarFactura();
 	void configurarEvento();
 	void venderEntradas();
-	void descuentos();
 	void imprimirInformacionEvento();
 	void imprimirEstadoDeVentas();
 	void menu();

@@ -115,13 +115,6 @@ void Segmento::seleccionarEspacio() {
     char letraFila;
     bool validacion = false;
 
-
-   /* if (verificarEstadodeEntradas()) {
-
-        cout << "\nEntradas no disponibles.Evento lleno" << endl;
-       
-    }
-    else {*/
         do {
 
             cout << "\nDigite la letra de la fila que desea (A-" << static_cast<char>('A' + fila - 1) << "): ";
@@ -129,9 +122,9 @@ void Segmento::seleccionarEspacio() {
             cout << "\nDigite el numero de silla que desea (1-" << columna << "): ";
             cin >> numeroColumna;
 
-            // Convertir la letra de la fila a un índice numérico
+            
             numeroFila = static_cast<int>(toupper(letraFila) - 'A');
-            numeroColumna -= 1; // Ajustar índice para columnas (base 0)
+            numeroColumna -= 1; 
 
             if (numeroFila < 0 || numeroFila >= fila || numeroColumna < 0 || numeroColumna >= columna) {
                 cout << "\nError: Posicion fuera de los limites.\n";
@@ -150,7 +143,7 @@ void Segmento::seleccionarEspacio() {
             cout << "\nAsiento reservado exitosamente en la fila " << letraFila << ", columna " << numeroColumna + 1 << ".\n";
 
         } while (!validacion);
-   // }
+   
 
 }
 

@@ -104,7 +104,7 @@ float Descuento::aplicarDescuento()
 
     total = porcentaje * precioSegmentoActual / 100.0;
 	
-	return total;
+    return precioSegmentoActual - total;
 }
 
 

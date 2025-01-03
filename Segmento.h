@@ -7,7 +7,7 @@ private:
     int cantidadEspacios;
     int fila;
     int columna;
-    char** espacios; // 1 = ocupado, 0 = disponible
+    char** espacios; // V = vendida, D = disponible
     float precio;
     int entradasVendidas;
 
