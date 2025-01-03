@@ -4,22 +4,23 @@ Segmento::Segmento() {
     cantidadEspacios = 0;
     fila = 0;
     columna = 0;
-    valorEntrada = 0;
+    precio = 0;
     espacios = nullptr;
+    entradasVendidas = 0;
 }
 
 Segmento::~Segmento() {
     if (espacios != nullptr) {
-        for (int i = 0; i < fila; ++i) {
+        for (int i = 0; i < fila; i++) {
             delete[] espacios[i];
         }
         delete[] espacios;
     }
 }
 
-void Segmento::setValorEntrada(int valorEntrada)
+void Segmento::setPrecio(int precio)
 {
-    this->valorEntrada = valorEntrada;
+    this->precio = precio;
 }
 
 void Segmento::setCantidadEspacios(int cantidadEspacios) {
@@ -45,82 +46,120 @@ int Segmento::getColumna() {
     return columna;
 }
 
-int Segmento::getValorEntrada()
+int Segmento::getPrecio()
 {
-    return valorEntrada;
+    return precio;
 }
 
-// Inicializa la matriz dinámica
-void Segmento::inicializarMatriz() { 
+int Segmento::getEntradasVendidas()
+{
+    return entradasVendidas;
+}
+
+
+void Segmento::inicializarMatriz() {
     if (espacios != nullptr) {
-        for (int i = 0; i < fila; ++i) {
+        for (int i = 0; i < fila; i++) {
             delete[] espacios[i];
         }
         delete[] espacios;
     }
 
-    espacios = new int* [fila];
-    for (int i = 0; i < fila; ++i) {
-        espacios[i] = new int[columna];
-        for (int j = 0; j < columna; ++j) {
-            espacios[i][j] = 0; // Inicializar como disponibles
+    espacios = new char* [fila];
+    for (int i = 0; i < fila; i++) {
+        espacios[i] = new char[columna];
+        for (int j = 0; j < columna; j++) {
+            espacios[i][j] = 'D';
         }
     }
 }
 
-// Configura el segmento
-void Segmento::preguntarEspacios() {
-    
-    cout << "\nPrecio de la entrada del Segmento: ";
-    cin >> valorEntrada;
+void Segmento::preguntarDatos() {
     cout << "Filas: ";
     cin >> fila;
     cout << "Columnas: ";
     cin >> columna;
+    cout << "Precio de cada espacio en colones: ";
+    cin >> precio;
 
     setCantidadEspacios(fila * columna);
     inicializarMatriz();
 
-    cout << "\nLa cantidad de espacios de su segmento es de: " << cantidadEspacios << endl;
-    cout << "Valor de la entrada: " << valorEntrada << endl;
+   /* cout << endl;
+    cout << "La cantidad de espacios de su segmento es de: " << cantidadEspacios << endl;
+    cout << "El precio de los espacios del segmento es de: " << precio << endl;
     cout << endl;
+    cout << endl;*/
 }
- 
-// Permite reservar un asiento
+
+bool Segmento::verificarEstadodeEntradas()
+{
+    for (int i = 0; i < fila; i++) {
+        for (int j = 0; j < columna; j++) {
+
+            if (espacios[i][j] != 'V') {
+
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
 void Segmento::seleccionarEspacio() {
-    int numeroFila, numeroColumna;
-    cout << "Digite el numero de fila que desea (0-" << fila - 1 << "): ";//Cambiar para que empiece en 1 o como A1
-    cin >> numeroFila;
-    cout << "Digite el numero de columna que desea (0-" << columna - 1 << "): ";
-    cin >> numeroColumna;
+    int numeroFila;
+    int numeroColumna;
+    int contadorEspacios = 0;
+    char letraFila;
+    bool validacion = false;
 
-    // Validar límites
-    if (numeroFila < 0 || numeroFila >= fila || numeroColumna < 0 || numeroColumna >= columna) {
-        cout << "Error: Posicion fuera de los limites.\n";
-        return;
-    }
 
-    // Verificar disponibilidad
-    if (espacios[numeroFila][numeroColumna] == 1) {
-        cout << "El espacio ya está ocupado. Por favor, elija otro.\n";
-    }
-    else {
-        // Marcar como ocupado
-        espacios[numeroFila][numeroColumna] = 1;
-        cout << "Asiento reservado exitosamente en la fila " << numeroFila << ", columna " << numeroColumna << ".\n";
+   /* if (verificarEstadodeEntradas()) {
 
-        
+        cout << "\nEntradas no disponibles.Evento lleno" << endl;
+       
     }
+    else {*/
+        do {
+
+            cout << "\nDigite la letra de la fila que desea (A-" << static_cast<char>('A' + fila - 1) << "): ";
+            cin >> letraFila;
+            cout << "\nDigite el numero de silla que desea (1-" << columna << "): ";
+            cin >> numeroColumna;
+
+            // Convertir la letra de la fila a un índice numérico
+            numeroFila = static_cast<int>(toupper(letraFila) - 'A');
+            numeroColumna -= 1; // Ajustar índice para columnas (base 0)
+
+            if (numeroFila < 0 || numeroFila >= fila || numeroColumna < 0 || numeroColumna >= columna) {
+                cout << "\nError: Posicion fuera de los limites.\n";
+                continue;
+
+            }
+
+            if (espacios[numeroFila][numeroColumna] == 'V') {
+                cout << "\nEl espacio ya esta ocupado. Por favor, elija otro.\n";
+                continue;
+            }
+
+            validacion = true;
+            espacios[numeroFila][numeroColumna] = 'V';
+            entradasVendidas++;
+            cout << "\nAsiento reservado exitosamente en la fila " << letraFila << ", columna " << numeroColumna + 1 << ".\n";
+
+        } while (!validacion);
+   // }
+
 }
 
-// Muestra el estado actual del segmento
-void Segmento::mostrarEspacios() {
 
-    cout << "\nEstado de los asientos (1 = ocupado, 0 = disponible):\n";
-    for (int i = 0; i < fila; ++i) {
-        for (int j = 0; j < columna; ++j) {
+void Segmento::mostrarEspacios() {
+    cout << "Estado de los asientos (V = vendida, D = disponible):\n";
+    for (int i = 0; i < fila; i++) {
+        for (int j = 0; j < columna; j++) {
             cout << espacios[i][j] << " ";
-            
         }
         cout << endl;
     }

@@ -13,8 +13,6 @@ private:
 	int porcentaje;
 	int cantidad;
 	string contrasenia;
-	bool descuentoAplicado; 
-	bool descuentoAprobado = false; 
 	int precioSegmentoActual;
 
   
@@ -23,9 +21,14 @@ public:
 	    
 	Descuento();
   
+	void setCantidad(int cantidad);
+	void setContrasenia(string contrasenia);
 
-    string generarContrasenia(int cantidad);
-	void confirmarDescuento(int personaCompra, int precioSegmento);
+	int getCantidad();
+	string getContrasenia();
+
+    string generarContrasenia();
+	void confirmarDescuento(int precioSegmento);
 	float aplicarDescuento();
 	void IngresarDatosdelEvento();
 

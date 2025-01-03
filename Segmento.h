@@ -7,24 +7,27 @@ private:
     int cantidadEspacios;
     int fila;
     int columna;
-    int valorEntrada;
-    int** espacios; // 1 = ocupado, 0 = disponible
+    char** espacios; // 1 = ocupado, 0 = disponible
+    float precio;
+    int entradasVendidas;
 
 public:
     Segmento();
     ~Segmento();
 
-    void setValorEntrada(int valorEntrada);
+    void setPrecio(int precio);
     void setCantidadEspacios(int cantidadEspacios);
     void setFila(int fila);
     void setColumna(int columna);
     int getCantidadEspacios();
     int getFila();
     int getColumna();
-    int getValorEntrada();
+    int getPrecio();
+    int getEntradasVendidas();
 
     void inicializarMatriz();
-    void preguntarEspacios();
+    void preguntarDatos();
+    bool verificarEstadodeEntradas();
     void seleccionarEspacio();
     void mostrarEspacios();
 };

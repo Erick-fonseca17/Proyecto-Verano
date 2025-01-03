@@ -1,13 +1,32 @@
 #include "Venta.h"
+#include <string>
+
+string Venta::getNombreCliente()
+{
+	return nombreCliente;
+}
+
+string Venta::getCedulaCliente()
+{
+	return cedulaCliente;
+}
+
+string Venta::getFechaNacimiento()
+{
+	return fechaNacimiento;
+}
 
 void Venta::preguntarDatos()
 {
-	cout << "Ingrese el nombre del comprador: " << endl;
+	cout << "----------------------- VENTA DE ENTRADAS -----------------------\n";
+	cout << endl;
+	cout << "Ingrese los datos del comprador: \n";
+	cout << endl;
+	cout << "Nombre completo: " << endl;
 	cin.ignore();
-	getline(cin, nombre);
-	cout << "Ingrese el numero de cedula del comprador: " << endl;
-	cin >> cedula;
-	cout << "Ingrese la fecha de nacimiento del comprador: " << endl;
+	getline(cin, nombreCliente);
+	cout << "Numero de cedula: " << endl;
+	cin >> cedulaCliente;
+	cout << "Fecha de nacimineto: " << endl;
 	cin >> fechaNacimiento;
-
 }

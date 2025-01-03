@@ -4,11 +4,14 @@
 #include "venta.h"
 #include "Descuento.h"
 
+using namespace std;
+
 class Evento
 {
 private:
 
 	Segmento* segmentos;
+	Segmento segmento1;
 	int numeroSegmento;
 	int cantidadEspacios;
 	string nombreEvento;
@@ -17,14 +20,16 @@ private:
 	int cantidadPersonas;
 	int segmentoSeleccionado;
 
+
 public:
 
 	Evento();
 	~Evento();
 
-	
-	void cantidadSegmento();//Datos del evento, cambiar nombre
-	void seleccionDeEntradas();
+	string getNombreEvento();
+	void generarFactura();
+	void configurarEvento();
+	void venderEntradas();
 	void descuentos();
 	void imprimirInformacionEvento();
 	void imprimirEstadoDeVentas();
