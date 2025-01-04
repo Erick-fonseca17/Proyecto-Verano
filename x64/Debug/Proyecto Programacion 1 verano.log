@@ -1,0 +1,8 @@
+﻿  Evento.cpp
+C:\Users\brena\OneDrive\Desktop\UNA\Progra 1 verano\Proyecto Programacion 1 verano\Proyecto Programacion 1 verano\Evento.cpp(59,30): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Proyecto Programacion 1 verano.cpp
+  Segmento.cpp
+C:\Users\brena\OneDrive\Desktop\UNA\Progra 1 verano\Proyecto Programacion 1 verano\Proyecto Programacion 1 verano\Segmento.cpp(24,20): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\brena\OneDrive\Desktop\UNA\Progra 1 verano\Proyecto Programacion 1 verano\Proyecto Programacion 1 verano\Segmento.cpp(52,12): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Proyecto Programacion 1 verano.vcxproj -> C:\Users\brena\OneDrive\Desktop\UNA\Progra 1 verano\Proyecto Programacion 1 verano\x64\Debug\Proyecto Programacion 1 verano.exe
