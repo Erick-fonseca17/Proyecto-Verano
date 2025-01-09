@@ -1,5 +1,4 @@
 #include "Venta.h"
-#include <string>
 
 string Venta::getNombreCliente()
 {
@@ -18,7 +17,9 @@ string Venta::getFechaNacimiento()
 
 void Venta::preguntarDatos()
 {
+	cout << "\033[0;33m";
 	cout << "----------------------- VENTA DE ENTRADAS -----------------------\n";
+	cout << "\033[0m";
 	cout << endl;
 	cout << "Ingrese los datos del comprador: \n";
 	cout << endl;

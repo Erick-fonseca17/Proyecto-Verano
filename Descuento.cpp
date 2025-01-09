@@ -2,9 +2,11 @@
 
 Descuento::Descuento()
 {
-	porcentaje = 0;
-	cantidad = 0;
-	contrasenia = " "; 
+    porcentaje = 0;
+    cantidad = 0;
+    contrasenia = " ";
+    vec = NULL;
+    srand(time(0));
 }
 
 void Descuento::setCantidad(int cantidad)
@@ -24,19 +26,23 @@ int Descuento::getCantidad()
 
 string Descuento::getContrasenia()
 {
+    contrasenia = vec[contadorConmtrsenia]; 
+    contadorConmtrsenia++;
+
     return contrasenia;
+    
 }
 
-string Descuento::generarContrasenia() 
+string Descuento::generarContrasenia()
 {
 
     string caracter;
 
-    for (char c = '0'; c <= '9'; c++) 
+    for (char c = '0'; c <= '9'; c++)
     {
         caracter += c;
     }
-    for (char c = 'A'; c <= 'Z'; c++) 
+    for (char c = 'A'; c <= 'Z'; c++)
     {
         caracter += c;
     }
@@ -46,16 +52,14 @@ string Descuento::generarContrasenia()
     }
     caracter += "!@#$%^&*()";
 
-    srand(time(0));
 
     string contraseniaGenerada;
-    for (int i = 0; i < 6; i++) 
+
+    for (int i = 0; i < 6; i++)
     {
         int indice = rand() % caracter.length();
         contraseniaGenerada += caracter[indice];
     }
-
-    contrasenia = contraseniaGenerada;
 
     return contraseniaGenerada;
 
@@ -63,48 +67,66 @@ string Descuento::generarContrasenia()
 
 void Descuento::IngresarDatosdelEvento()
 {
+    cout << "---------------------- ESTADO DEL DESCUENTO ----------------------\n";
+    cout << "\033[0m";
+    cout << endl;
+    cout << "Ingrese el porcentaje de descuento: ";
+    cin >> porcentaje;
 
-    contrasenia = generarContrasenia();
-
-   cout << "---------------------- ESTADO DEL DESCUENTO ----------------------\n";
-   cout << endl;
-   cout << "Ingrese el porcentaje de descuento: ";
-   cin >> porcentaje;
-
-    if (porcentaje < 0 || porcentaje > 100) 
+    if (porcentaje < 0 || porcentaje > 100)
     {
+        cout << "\033[0;31m";
         cout << "Error: El porcentaje debe estar entre 0 y 100.\n\n";
-        return;
+        cout << "\033[0m";
     }
+    
 
-    cout << "Ingrese la cantidad de personas que se les aplicara descuento: ";
+    cout << "Ingrese la cantidad de personas que se les aplicara el cupon de descuento: ";
     cin >> cantidad;
 
+    vec = new string[cantidad];
+    
     if (cantidad < 0)
     {
-        cout << "Error: La cantidad debe ser un número positivo.\n\n";
-        return;
+        cout << "\033[0;31m";
+        cout << "Error: La cantidad debe ser un número positivo\n\n";
+        cout << "\033[0m";
     }
-    cout << "\nPorcentaje: " << porcentaje << "%\n"
-        << "Cantidad personas: " << cantidad << "\n"
-        << "Contrasenia: " << contrasenia << "\n";
+  
+    cout << "\nDetalles del Descuento:\n";
+    cout << "Porcentaje: " << porcentaje << "%\n";
+    cout << "Cantidad de personas: " << cantidad << "\n";
+
+    for (int i = 0; i < cantidad; i++)
+    {
+        string contra = generarContrasenia();
+
+        vec[i] = contra;
+
+        cout << "Cupon " << (i + 1) << ": " << vec[i] << "\n";
+        
+    }
+
+    cout << "\033[0m";
 }
 
-void Descuento::confirmarDescuento(int precioSegmento)
-{
-    precioSegmentoActual = precioSegmento;
 
+void Descuento::confirmarDescuento(float precioSegmento)
+{
+    precioActual = precioSegmento;
+   
     aplicarDescuento();
-		 
+
 }
 
 float Descuento::aplicarDescuento()
 {
-    float total = 0; 
+    float total = 0;
 
-    total = porcentaje * precioSegmentoActual / 100.0;
-	
-    return precioSegmentoActual - total;
+    total = porcentaje * precioActual / 100.0;
+
+    float precioEntrada = precioActual - total;
+
+    return precioEntrada;
 }
-
 

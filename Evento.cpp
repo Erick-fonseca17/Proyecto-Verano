@@ -2,7 +2,7 @@
 #include "Segmento.h"
 
 Evento::Evento() {
-    segmentos = nullptr;
+    segmentos = NULL;
     numeroSegmento = 0;
     cantidadEspacios = 0;
     nombreEvento = "";
@@ -19,10 +19,10 @@ string Evento::getNombreEvento()
     return nombreEvento;
 }
 
-// Configura el evento
 void Evento::configurarEvento() {
-    cout << "------------------------------- CONFIGURACION DEL EVENTO -------------------------------\n";
-    cout << endl;
+    cout << "\033[0;33m";
+    cout << "------------------------------- CONFIGURACION DEL EVENTO -------------------------------\n\n";
+    cout << "\033[0m";
     cout << "\nIngrese el nombre del evento: ";
     cin.ignore();
     getline(cin, nombreEvento);
@@ -32,192 +32,296 @@ void Evento::configurarEvento() {
 
     if (numeroSegmento <= 0) {
         cout << "ERROR: El numero de segmentos debe ser mayor a 0 \n";
-        return;
     }
-    delete[] segmentos;
+    else {
+        delete[] segmentos;
 
-    segmentos = new Segmento[numeroSegmento];
-    for (int i = 0; i < numeroSegmento; i++) {
-        cout << "\nIngrese los datos del segmento #" << i + 1 << ":\n";
-        segmentos[i].preguntarDatos();
+        segmentos = new Segmento[numeroSegmento];
+        for (int i = 0; i < numeroSegmento; i++) {
+            cout << "\nIngrese los datos del segmento #" << i + 1 << ":\n";
+            segmentos[i].preguntarDatos();
+        }
+        system("CLS");
     }
-    system("CLS");
 }
 
+
+
+//Aplicar descuento a la factura
 void Evento::generarFactura() {
     float totalPagar = 0;
+    int entradas = 0;
+    float precioSegmento = 0.0;
+    float subtotal = 0.0;
+    cout << "\033[0;33m";
     cout << "------------------------- FACTURA -------------------------\n";
+    cout << "\033[0m";
     cout << "Evento: " << nombreEvento << "\n";
     cout << "Comprador: " << venta.getNombreCliente() << "\n";
     cout << "Cedula: " << venta.getCedulaCliente() << "\n";
     cout << "Fecha Nacimiento: " << venta.getFechaNacimiento() << "\n";
 
     cout << "Desglose de las entradas vendidas:\n";
-
     for (int i = 0; i < numeroSegmento; i++) {
-        int entradas = segmentos[i].getEntradasVendidas();
-        float precioSegmento = segmentos[i].getPrecio();
+        entradas = segmentos[i].getEntradasPorUsuario();
+        if (entradas > 0) {
+            precioSegmento = segmentos[i].getPrecio();
+            subtotal = entradas * precioSegmento;
 
-        float subtotal = entradas * precioSegmento;
+            cout << "Segmento #" << i + 1 << ":\n";
+            cout << "  Entradas vendidas: " << entradas << "\n";
+            cout << "  Precio por entrada: " << precioSegmento << " colones\n";
+            cout << "  Subtotal: " << subtotal << " colones\n";
+            segmentos[i].inicializarEntradasPorUsurio();
 
-        cout << "Segmento #" << i + 1 << ":\n";
-        cout << "  Entradas vendidas: " << segmentos[i].getEntradasVendidas() << "\n";
-        cout << "  Precio por entrada: " << precioSegmento << " colones\n";
-        cout << "  Subtotal: " << subtotal << " colones\n";
-
-        totalPagar += subtotal;
+            totalPagar += subtotal;
+        }
     }
 
+    descuento.confirmarDescuento(totalPagar);
     cout << "\nTOTAL A PAGAR: " << totalPagar << " colones\n";
+    if (descuentoAceptado == true) {
+        cout << "TOTAL A PAGAR CON DESCUENTO: " << descuento.aplicarDescuento() << " colones\n";
+    }
     cout << "----------------------------------------------------------\n";
 }
 
 void Evento::venderEntradas() {
-
-    int contadorEspacios = 0;
-    char continuaComprando;
-    int segmentoSeleccionado;
- 
     if (!segmentos) {
-        cout << "\nATENCION: Primero configure el evento.\n";
+        cout << "\033[0;31m";
+        cout << "\nATENCION: Primero configure el evento\n\n";
+        cout << "\033[0m";
         cout << endl;
-        return;
     }
+    else {
+        venta.preguntarDatos();
+       
+        cout << "\033[0;31m";
+        cout << "\nATENCION: Puede comprar un maximo de 5 espacios.\n";
+        cout << "\033[0m";
+        cout << endl;
+        gestionarCompra();
+    }
+}
 
-    venta.preguntarDatos();
-    cantidadPersonas++;
-    cout << "\nATENCION: Puede comprar un maximo de 5 espacios.\n";
-    cout << endl;
-
+void Evento::gestionarCompra() {
+    char continuaComprando;
+    int contadorEspacios = 0;
+   
     do {
-
         imprimirEstadoDeVentas();
 
-        bool seleccionValida = false;
-        
-        while (!seleccionValida) {
-            cout << "\nSeleccione el segmento (1-" << numeroSegmento << "): ";
-            cin >> segmentoSeleccionado;
-
-            
-            if (segmentoSeleccionado < 1 || segmentoSeleccionado > numeroSegmento) {
-                cout << "\nSegmento invalido. Intentelo de nuevo.\n";
-                continue; 
-            }
-
-        
-            if (segmentos[segmentoSeleccionado - 1].verificarEstadodeEntradas()) {
-                cout << "\nEl segmento seleccionado esta lleno. Intente con otro segmento.\n";
-                continue; 
-            }
-
-            seleccionValida = true;
-        }
-
+        segmentoSeleccionado = seleccionarSegmento();
         segmentos[segmentoSeleccionado - 1].seleccionarEspacio();
         contadorEspacios++;
 
-        string digitarContrasenia;
-        bool descuentoExitoso = false;
-
-        for (int i = 0; i < 5; i++) 
-        {
-            if (cantidadPersonas <= descuento.getCantidad()) {
-
-              
-                cout << "\nContrasenia para validar el descuento: " << descuento.getContrasenia() << endl;
-
-                cout << "\nDigite la contrasenia para validar la compra: " << endl;
-                cin.ignore();
-                getline(cin, digitarContrasenia);
-
-                if (digitarContrasenia == descuento.getContrasenia()) {
-
-                    descuento.confirmarDescuento(segmentos[segmentoSeleccionado - 1].getPrecio());
-                    cout << "\nValor de la entrada con descuento: " << descuento.aplicarDescuento() << endl << endl;
-                    descuentoExitoso = true;
-                    break;
-                }
-                else {
-                    cout << "\nContrasenia incorrecta, vuelva a intentar.\n";
-                    break;
-                }
-
-            }
-        }
-        
-        if (!descuentoExitoso) {
-            cout << "\nNo se aplico ningun descuento.\n";
-        }
-
-        contadorEspacios++;
         if (contadorEspacios < 5) {
             cout << "\nDesea seguir comprando (s/n):\n ";
             cin >> continuaComprando;
             system("CLS");
         }
         else {
-            cout << "\nHa alcanzado el máximo de 5 entradas permitidas.\n";
+            cout << "\033[0;31m";
+            cout << "\nHa alcanzado el maximo de 5 entradas permitidas \n";
+            cout << "\033[0m";
             break;
         }
 
-        descuento.generarContrasenia(); 
-
+        
     } while (continuaComprando == 's' || continuaComprando == 'S');
 
-    cout << "\nTotal de entradas compradas: " << contadorEspacios << ".\n";
-    generarFactura();
+    if (procesarDescuento(segmentoSeleccionado)) {
+        cout << "\nEl descuento se aplico exitosamente.\n";
+        descuentoAceptado = true; 
+        cantidadPersonas++;
+    }
+    else {
+        cout << "\nNo se aplico ningun descuento.\n";
+        descuentoAceptado = false;
+    }
 
+   cout << "\nTotal de entradas compradas: " << contadorEspacios << ".\n";
+
+    generarFactura();
 }
+
+int Evento::seleccionarSegmento() {
+    bool seleccionValida = false;
+
+    while (!seleccionValida) {
+        cout << "\nSeleccione el segmento (1-" << numeroSegmento << "): ";
+        cin >> segmentoSeleccionado;
+
+        if (segmentoSeleccionado < 1 || segmentoSeleccionado > numeroSegmento) {
+            cout << "\nSegmento invalido. Intentelo de nuevo \n";
+            continue;
+        }
+
+        if (segmentos[segmentoSeleccionado - 1].verificarEstadodeEntradas()) {
+            cout << "\nEl segmento seleccionado esta lleno.\n";
+
+
+            if (numeroSegmento > 1) {
+                cout << "\nIntente con otro segmento.\n";
+            }
+            else {
+
+                cout << "\nNo hay mas espacios disponibles en el segmento.\n";
+                generarFactura();
+                return 0;
+            }
+
+            continue;
+        }
+
+
+        seleccionValida = true;
+    }
+
+    return segmentoSeleccionado;
+}
+
+bool Evento::procesarDescuento(int segmentoSeleccionado) {
+    string digitarContrasenia;
+    char aplicarDescuento;
+
+    if (cantidadPersonas < descuento.getCantidad()) {
+
+
+        do {
+            cout << "\nDesea aplicar descuento (s/n): ";
+            cin >> aplicarDescuento;
+
+            bool contraseniaAceptada = false;
+
+            if (aplicarDescuento == 's' || aplicarDescuento == 'S')
+            {
+                do {
+
+                    string contrasenna = descuento.getContrasenia();
+                    cout << "\nContrasenia para validar el descuento: " << contrasenna << endl;
+                    cout << "\nDigite la contrasenia para validar la compra: ";
+                    cin >> digitarContrasenia;
+
+                    if (digitarContrasenia == contrasenna) {
+
+                        cout << "\nValor total con descuento aplicado. " << endl;
+                        contraseniaAceptada = true;
+                        return true;
+                        
+                    }
+                    else {
+                        cout << "\nContrasenia incorrecta, vuelva a intentar.\n";
+                    }
+
+                } while (contraseniaAceptada == false);
+            }
+
+        } while (aplicarDescuento == 's' || aplicarDescuento == 'S');
+    }
+
+    return false;
+}
+
+
 
 void Evento::imprimirInformacionEvento()
 {
-    //Aplicar restriccion si todavia no se han creado los segmentos
+    cout << "\033[0;33m";
     cout << "\n-------------------------------- RESUMEN DE LA IMFORMACION DEL EVENTO -------------------------------- \n";
+    cout << "\033[0m";
     cout << "Evento: " << nombreEvento << "\n";
     for (int i = 0; i < numeroSegmento; i++) {
         cout << "Segmento #" << i + 1 << ": \n";
         cout << segmentos[i].getCantidadEspacios() << " espacios (" << segmentos[i].getFila() << " filas x " << segmentos[i].getColumna() << " columnas)\n" << endl;
-        cout << "El precio por espacio es de: " << segmentos[i].getPrecio();
-        cout << endl<<endl;
+        cout << "El precio por espacio es de: " << segmentos[i].getPrecio() << endl;
+        cout << "------------------------------------------------------------------------------------------------------ \n";
+        cout << endl << endl;
     }
 
 }
 
-void Evento::imprimirEstadoDeVentas() 
+void Evento::imprimirEstadoDeVentas()
 {
     if (!segmentos) {
-        cout << "\nATENCION: Primero configure el evento.\n";
+        cout << "\nATENCION: Primero configure el evento \n";
         cout << endl;
-        return;
     }
-
-    cout << "---------------------- ESTADO DE VENTAS ----------------------\n";
-    cout << endl;
-    cout << "Evento: " << nombreEvento << "\n";
-    for (int i = 0; i < numeroSegmento; i++) {
-        cout << "\nSegmento " << i + 1 << ":\n";
-        cout << "\nPrecio del Evento: " << segmentos[i].getPrecio() << endl;
-        cout << endl;
-        segmentos[i].mostrarEspacios();
+    else {
+        cout << "\033[0;33m";
+        cout << "---------------------- ESTADO DE VENTAS ----------------------\n\n";
+        cout << "\033[0m";
+        cout << "Evento: " << nombreEvento << "\n";
+        for (int i = 0; i < numeroSegmento; i++) {
+            cout << "\nSegmento " << i + 1 << ":\n";
+            cout << "\nPrecio del Evento: " << segmentos[i].getPrecio() << endl;
+            cout << endl;
+            segmentos[i].mostrarEspacios();
+        }
     }
 }
 
+void Evento::infoEstudiantes()
+{
+    const char* brenda = R"( ____                     _            _               _ _            
+| __ ) _ __ ___ _ __   _| | __ _     / \   __ _ _   _() | __ _ _ __ 
+|  _ \| '/ _ \ '_ \ / ` |/ _` |   / _ \ / _` | | | | | |/ _` | '_|
+| |) | | |  __/ | | | (| | (| |  / ___ \ (| | || | | | (| | |   
+|/||  \|| ||\,|\,| //   \\, |\,|||\,|_|   
+|  __|_  _ __  ___  ___  ___ __ _        |_/                      
+| |_ / _ \| '_ \/ __|/ _ \/ __/ _` |                                  
+|  | () | | | \__ \  _/ (| (_| |                                  
+||  \/|| ||/\|\\,|                                  )";
+    cout << "\033[0;35m";
+    cout << brenda << endl;
+    cout << "\033[0m";
+    cout << "Numero de cedula:\n";
+    cout << endl << endl << endl;
+
+    const char* erick = R"( _____      _      _      _____                              
+| ___| _() __| | __ |  ___|_  _ __  ___  ___  ___ __ _ 
+|  | | '| |/ __| |/ / | | / _ \| '_ \/ __|/ _ \/ __/ _` |
+| || |  | | (|   <  |  _| () | | | \__ \  _/ (| (_| |
+|||  ||\||\\ ||  \/|| ||/\|\\,|
+|  \/  | __ | | __ _                                       
+| |\/| |/ _` | __/ _` |                                      
+| |  | | (| | || (| |                                      
+||  ||\,|\\,|                                      )";
+    cout << "\033[0;34m";
+    cout << erick << endl;
+    cout << "\033[0m";
+    cout << "Numero de cedula: \n";
+
+
+}
+
+void Evento::mostrarLogo()
+{
+    const char* logo = R"( _____                 _              _____          _   __        
+| ___|   _____ _ __ | |_ ___  ___  |  __|   _ ___() /_/  _ __  
+|  | \ \ / / _ \ ' \| _/ _ \/ __| | | | | | / _| |/ _ \| ' \ 
+| |___ \ V /  _/ | | | || () \__ \ |  || || \__ \ | (_) | | | |
+|| \/ \|| ||\\/|/ ||   \,|/|\/|| ||)";
+    cout << "\033[0;32m";
+    cout << logo;
+    cout << "\033[0m";
+}
 
 void Evento::menu()
 {
     bool entrar = true;
-
+    mostrarLogo();
+    cout << endl;
     while (entrar) {
 
         int opcion = 0;
-        cout << "\nOpciones para creacion del Evento\n";
-        cout << "#1 Configuracion de evento\n";//Listo, solo falta hacer restricciones
-        cout << "#2 Configurar descuentos\n"; //Erick
+        cout << "\nOpciones para el evento:\n\n";
+        cout << "#1 Configuracion de evento\n";
+        cout << "#2 Configurar descuentos\n";
         cout << "#3 Venta de entradas\n";
         cout << "#4 Consultar estado de ventas\n";
         cout << "#5 Acerca de los creadores\n";
-        cout << "#6 OPCION SALIR\n";
+        cout << "#6 OPCION SALIR\n\n";
 
         cout << "Digite la opcion que desea usar" << " : \n";
         cin >> opcion;
@@ -227,14 +331,13 @@ void Evento::menu()
 
         case 1:
 
-            
+
             configurarEvento();
             imprimirInformacionEvento();
             cout << "\n";
             cout << "\n";
             break;
         case 2:
-            //Funcion de creacion de descuento
             descuento.IngresarDatosdelEvento();
             break;
 
@@ -243,12 +346,10 @@ void Evento::menu()
 
             break;
         case 4:
-            //Presentacion grafica de la venta de entadas.No es la version final, es un borrador de lo que quiero
             imprimirEstadoDeVentas();
             break;
         case 5:
-            //Presentacion de los estudiantes creadores de proyecto
-            
+            infoEstudiantes();
             break;
         case 6:
             entrar = false;

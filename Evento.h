@@ -18,6 +18,9 @@ private:
 	Descuento descuento;
 	int cantidadPersonas;
 	int segmentoSeleccionado;
+	bool descuentoAceptado = false; 
+	int contadorContrasena;
+
 
 
 public:
@@ -26,11 +29,18 @@ public:
 	~Evento();
 
 	string getNombreEvento();
+
+
 	void generarFactura();
 	void configurarEvento();
 	void venderEntradas();
+	void gestionarCompra();
+	int seleccionarSegmento();
+	bool procesarDescuento(int segmentoSeleccionado);
 	void imprimirInformacionEvento();
 	void imprimirEstadoDeVentas();
+	void infoEstudiantes();
+	void mostrarLogo();
 	void menu();
 
 

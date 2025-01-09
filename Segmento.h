@@ -10,12 +10,13 @@ private:
     char** espacios; // V = vendida, D = disponible
     float precio;
     int entradasVendidas;
+    int entradasPorUsuario;
 
 public:
     Segmento();
     ~Segmento();
 
-    void setPrecio(int precio);
+    void setPrecio(float precio);
     void setCantidadEspacios(int cantidadEspacios);
     void setFila(int fila);
     void setColumna(int columna);
@@ -24,6 +25,8 @@ public:
     int getColumna();
     int getPrecio();
     int getEntradasVendidas();
+    int getEntradasPorUsuario();
+    void inicializarEntradasPorUsurio();
 
     void inicializarMatriz();
     void preguntarDatos();
