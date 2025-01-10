@@ -67,7 +67,6 @@ void Segmento::inicializarEntradasPorUsurio()
     entradasPorUsuario = 0;
 }
 
-
 void Segmento::inicializarMatriz() {
     if (espacios != NULL) {
         for (int i = 0; i < fila; i++) {

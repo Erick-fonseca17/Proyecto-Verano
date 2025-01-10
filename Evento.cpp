@@ -44,9 +44,6 @@ void Evento::configurarEvento() {
         system("CLS");
     }
 }
-
-
-
 //Aplicar descuento a la factura
 void Evento::generarFactura() {
     float totalPagar = 0;
@@ -107,30 +104,36 @@ void Evento::venderEntradas() {
 void Evento::gestionarCompra() {
     char continuaComprando;
     int contadorEspacios = 0;
-   
-    do {
-        imprimirEstadoDeVentas();
+    
+        do {
 
-        segmentoSeleccionado = seleccionarSegmento();
-        segmentos[segmentoSeleccionado - 1].seleccionarEspacio();
-        contadorEspacios++;
+            imprimirEstadoDeVentas();
 
-        if (contadorEspacios < 5) {
-            cout << "\nDesea seguir comprando (s/n):\n ";
-            cin >> continuaComprando;
-            system("CLS");
-        }
-        else {
-            cout << "\033[0;31m";
-            cout << "\nHa alcanzado el maximo de 5 entradas permitidas \n";
-            cout << "\033[0m";
-            break;
-        }
+            segmentoSeleccionado = seleccionarSegmento();
 
-        
-    } while (continuaComprando == 's' || continuaComprando == 'S');
+            if (noHaySegmentos == false) {
 
-    if (procesarDescuento(segmentoSeleccionado)) {
+                segmentos[segmentoSeleccionado - 1].seleccionarEspacio();
+                contadorEspacios++;
+
+                if (contadorEspacios < 5) {
+                    cout << "\nDesea seguir comprando (s/n):\n ";
+                    cin >> continuaComprando;
+                    system("CLS");
+                }
+                else {
+                    cout << "\033[0;31m";
+                    cout << "\nHa alcanzado el maximo de 5 entradas permitidas \n";
+                    cout << "\033[0m";
+                    break;
+                }
+            }
+
+
+        } while (continuaComprando == 's' && noHaySegmentos==false);
+    
+
+    if (procesarDescuento()) {
         cout << "\nEl descuento se aplico exitosamente.\n";
         descuentoAceptado = true; 
         cantidadPersonas++;
@@ -140,7 +143,7 @@ void Evento::gestionarCompra() {
         descuentoAceptado = false;
     }
 
-   cout << "\nTotal de entradas compradas: " << contadorEspacios << ".\n";
+    cout << "\nTotal de entradas compradas: " << contadorEspacios << ".\n";
 
     generarFactura();
 }
@@ -162,33 +165,34 @@ int Evento::seleccionarSegmento() {
 
 
             if (numeroSegmento > 1) {
+
                 cout << "\nIntente con otro segmento.\n";
             }
             else {
 
                 cout << "\nNo hay mas espacios disponibles en el segmento.\n";
-                generarFactura();
-                return 0;
+                noHaySegmentos = true;
             }
 
-            continue;
+            if (noHaySegmentos==false) {
+
+                continue;
+                
+            }
+          
         }
-
-
         seleccionValida = true;
     }
 
     return segmentoSeleccionado;
 }
 
-bool Evento::procesarDescuento(int segmentoSeleccionado) {
+bool Evento::procesarDescuento() {
     string digitarContrasenia;
     char aplicarDescuento;
 
     if (cantidadPersonas < descuento.getCantidad()) {
-
-
-        do {
+   
             cout << "\nDesea aplicar descuento (s/n): ";
             cin >> aplicarDescuento;
 
@@ -208,7 +212,7 @@ bool Evento::procesarDescuento(int segmentoSeleccionado) {
                         cout << "\nValor total con descuento aplicado. " << endl;
                         contraseniaAceptada = true;
                         return true;
-                        
+
                     }
                     else {
                         cout << "\nContrasenia incorrecta, vuelva a intentar.\n";
@@ -216,8 +220,7 @@ bool Evento::procesarDescuento(int segmentoSeleccionado) {
 
                 } while (contraseniaAceptada == false);
             }
-
-        } while (aplicarDescuento == 's' || aplicarDescuento == 'S');
+        
     }
 
     return false;
@@ -297,11 +300,12 @@ void Evento::infoEstudiantes()
 
 void Evento::mostrarLogo()
 {
-    const char* logo = R"( _____                 _              _____          _   __        
-| ___|   _____ _ __ | |_ ___  ___  |  __|   _ ___() /_/  _ __  
-|  | \ \ / / _ \ ' \| _/ _ \/ __| | | | | | / _| |/ _ \| ' \ 
-| |___ \ V /  _/ | | | || () \__ \ |  || || \__ \ | (_) | | | |
-|| \/ \|| ||\\/|/ ||   \,|/|\/|| ||)";
+    const char* logo = R"( _____                 _              _____                   _         
+| ____| _____ _ __ | |_ ___  ___  |  ___|  __ _  __ _ _ __(_) __ _  
+|  _| \ \ / / _ \ '_ \| _/ _ \/ __| | |_   / _` |/ _` | '__| |/ _` | 
+| |___ \ V /  __/ | | | || (_) \__ \ |  _| | (_| | (_| | |  | | (_| | 
+|_____| \_/ \___|_| |_|_|\___/|___/ |_|    \__, |\__, |_|  |_|\__,_| 
+                                          |___/ |___/               )";
     cout << "\033[0;32m";
     cout << logo;
     cout << "\033[0m";

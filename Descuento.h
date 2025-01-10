@@ -13,8 +13,8 @@ private:
 	string contrasenia;
 	float precioActual;
 
-	string* vec;
-	int contadorConmtrsenia = 0;
+	string* vecContrasenia;
+	int contadorContrasenia = 0;
 
 public:
 

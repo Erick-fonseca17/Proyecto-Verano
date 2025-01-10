@@ -5,7 +5,7 @@ Descuento::Descuento()
     porcentaje = 0;
     cantidad = 0;
     contrasenia = " ";
-    vec = NULL;
+    vecContrasenia = NULL;
     srand(time(0));
 }
 
@@ -26,11 +26,10 @@ int Descuento::getCantidad()
 
 string Descuento::getContrasenia()
 {
-    contrasenia = vec[contadorConmtrsenia]; 
-    contadorConmtrsenia++;
+    contrasenia = vecContrasenia[contadorContrasenia];
+    contadorContrasenia++;
 
-    return contrasenia;
-    
+    return contrasenia; 
 }
 
 string Descuento::generarContrasenia()
@@ -84,7 +83,7 @@ void Descuento::IngresarDatosdelEvento()
     cout << "Ingrese la cantidad de personas que se les aplicara el cupon de descuento: ";
     cin >> cantidad;
 
-    vec = new string[cantidad];
+    vecContrasenia = new string[cantidad];
     
     if (cantidad < 0)
     {
@@ -101,9 +100,9 @@ void Descuento::IngresarDatosdelEvento()
     {
         string contra = generarContrasenia();
 
-        vec[i] = contra;
+        vecContrasenia[i] = contra;
 
-        cout << "Cupon " << (i + 1) << ": " << vec[i] << "\n";
+        cout << "Cupon " << (i + 1) << ": " << vecContrasenia[i] << "\n";
         
     }
 
@@ -111,9 +110,9 @@ void Descuento::IngresarDatosdelEvento()
 }
 
 
-void Descuento::confirmarDescuento(float precioSegmento)
+void Descuento::confirmarDescuento(float precioTotal)
 {
-    precioActual = precioSegmento;
+    precioActual = precioTotal;
    
     aplicarDescuento();
 

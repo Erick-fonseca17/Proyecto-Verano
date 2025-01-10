@@ -19,7 +19,7 @@ private:
 	int cantidadPersonas;
 	int segmentoSeleccionado;
 	bool descuentoAceptado = false; 
-	int contadorContrasena;
+	bool noHaySegmentos = false; 
 
 
 
@@ -36,7 +36,7 @@ public:
 	void venderEntradas();
 	void gestionarCompra();
 	int seleccionarSegmento();
-	bool procesarDescuento(int segmentoSeleccionado);
+	bool procesarDescuento();
 	void imprimirInformacionEvento();
 	void imprimirEstadoDeVentas();
 	void infoEstudiantes();
