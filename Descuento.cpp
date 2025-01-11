@@ -24,10 +24,10 @@ int Descuento::getCantidad()
     return cantidad;
 }
 
-string Descuento::getContrasenia(bool contraseniaIncorrecta)
+string Descuento::getContrasenia(bool estadoContrasenia)
 {
     
-    if (contraseniaIncorrecta == false) {
+    if (estadoContrasenia == false) {
 
         contadorContrasenia++;// se incrementa para que en cada vuelta del metodo use la contraseña siguiente
     }

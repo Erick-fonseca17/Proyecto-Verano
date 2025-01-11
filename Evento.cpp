@@ -200,7 +200,7 @@ bool Evento::procesarDescuento() {
             {
                 do {
 
-                    string contrasenna = descuento.getContrasenia(contraseniaIncorrecta);
+                    string contrasenna = descuento.getContrasenia(contraseniaCondicion);
                     cout << "\nContrasenia para validar el descuento: " << contrasenna << endl;
                     cout << "\nDigite la contrasenia para validar la compra: ";
                     cin >> digitarContrasenia;
@@ -210,13 +210,13 @@ bool Evento::procesarDescuento() {
                         cout << "\nValor total con descuento aplicado. " << endl;
 
                         contraseniaAceptada = true;
-                        contraseniaIncorrecta = false;
+                        contraseniaCondicion = false;
                         return true;
 
                     }
                     else {
                         cout << "\nContrasenia incorrecta, vuelva a intentar.\n";
-                        contraseniaIncorrecta = true;
+                        contraseniaCondicion = true;
                     }
 
                 } while (contraseniaAceptada == false);
