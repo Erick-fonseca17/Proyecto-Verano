@@ -24,7 +24,7 @@
     <ClCompile Include="Evento.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Venta.cpp">
+    <ClCompile Include="Cliente.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Descuento.cpp">
@@ -38,7 +38,7 @@
     <ClInclude Include="Evento.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Venta.h">
+    <ClInclude Include="Cliente.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Descuento.h">

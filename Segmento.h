@@ -4,26 +4,24 @@ using namespace std;
 
 class Segmento {
 private:
-    int cantidadEspacios;
-    int fila;
+    int fila;  
     int columna;
     char** espacios; // V = vendida, D = disponible
     float precio;
     int entradasVendidas;
     int entradasPorUsuario;
 
+
 public:
     Segmento();
     ~Segmento();
 
     void setPrecio(float precio);
-    void setCantidadEspacios(int cantidadEspacios);
     void setFila(int fila);
     void setColumna(int columna);
-    int getCantidadEspacios();
     int getFila();
     int getColumna();
-    int getPrecio();
+    float getPrecio();
     int getEntradasVendidas();
     int getEntradasPorUsuario();
     void inicializarEntradasPorUsurio();

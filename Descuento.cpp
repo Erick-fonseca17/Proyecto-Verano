@@ -24,10 +24,14 @@ int Descuento::getCantidad()
     return cantidad;
 }
 
-string Descuento::getContrasenia()
+string Descuento::getContrasenia(bool contraseniaIncorrecta)
 {
-    contrasenia = vecContrasenia[contadorContrasenia];
-    contadorContrasenia++;
+    
+    if (contraseniaIncorrecta == false) {
+
+        contadorContrasenia++;// se incrementa para que en cada vuelta del metodo use la contraseña siguiente
+    }
+    contrasenia = vecContrasenia[contadorContrasenia]; // se asigna la contraseña almacenda en el vector
 
     return contrasenia; 
 }
@@ -98,11 +102,11 @@ void Descuento::IngresarDatosdelEvento()
 
     for (int i = 0; i < cantidad; i++)
     {
-        string contra = generarContrasenia();
+        string contra = generarContrasenia(); // se asigna la contraseña generada a contra
 
-        vecContrasenia[i] = contra;
+        vecContrasenia[i] = contra;// se guarda la contraseña de contra en el vector dinamico 
 
-        cout << "Cupon " << (i + 1) << ": " << vecContrasenia[i] << "\n";
+        cout << "Cupon " << (i + 1) << ": " << vecContrasenia[i] << "\n"; // muestra las contraseñas de cada cupon 
         
     }
 

@@ -24,7 +24,7 @@ public:
 	void setContrasenia(string contrasenia);
 
 	int getCantidad();
-	string getContrasenia();
+	string getContrasenia(bool contraseniaIncorrecta);
 
 	string generarContrasenia();
 	void confirmarDescuento(float precioSegmento);

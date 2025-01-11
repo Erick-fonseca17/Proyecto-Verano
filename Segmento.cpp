@@ -1,7 +1,6 @@
 #include "Segmento.h"
 
 Segmento::Segmento() {
-    cantidadEspacios = 0;
     fila = 0;
     columna = 0;
     precio = 0;
@@ -9,7 +8,6 @@ Segmento::Segmento() {
     entradasVendidas = 0;
     entradasPorUsuario = 0;
 }
-
 Segmento::~Segmento() {
     if (espacios != NULL) {
         for (int i = 0; i < fila; i++) {
@@ -24,10 +22,6 @@ void Segmento::setPrecio(float precio)
     this->precio = precio;
 }
 
-void Segmento::setCantidadEspacios(int cantidadEspacios) {
-    this->cantidadEspacios = cantidadEspacios;
-}
-
 void Segmento::setFila(int fila) {
     this->fila = fila;
 }
@@ -36,18 +30,15 @@ void Segmento::setColumna(int columna) {
     this->columna = columna;
 }
 
-int Segmento::getCantidadEspacios() {
-    return cantidadEspacios;
-}
-
 int Segmento::getFila() {
     return fila;
 }
+
 int Segmento::getColumna() {
     return columna;
 }
 
-int Segmento::getPrecio()
+float Segmento::getPrecio()
 {
     return precio;
 }
@@ -91,8 +82,6 @@ void Segmento::preguntarDatos() {
     cin >> columna;
     cout << "Precio de cada espacio en colones: ";
     cin >> precio;
-
-    setCantidadEspacios(fila * columna);
     inicializarMatriz();
 }
 
@@ -115,7 +104,6 @@ bool Segmento::verificarEstadodeEntradas()
 void Segmento::seleccionarEspacio() {
     int numeroFila;
     int numeroColumna;
-    int contadorEspacios = 0;
     char letraFila;
     bool validacion = false;
 
@@ -151,7 +139,6 @@ void Segmento::seleccionarEspacio() {
 
 
 }
-
 
 void Segmento::mostrarEspacios() {
     cout << "Estado de los asientos (V = vendida, D = disponible):\n";

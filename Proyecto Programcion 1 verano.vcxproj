@@ -131,13 +131,13 @@
     <ClCompile Include="Evento.cpp" />
     <ClCompile Include="Proyecto Programcion 1 verano.cpp" />
     <ClCompile Include="Segmento.cpp" />
-    <ClCompile Include="Venta.cpp" />
+    <ClCompile Include="Cliente.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Descuento.h" />
     <ClInclude Include="Evento.h" />
     <ClInclude Include="Segmento.h" />
-    <ClInclude Include="Venta.h" />
+    <ClInclude Include="Cliente.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,10 +4,10 @@
 Evento::Evento() {
     segmentos = NULL;
     numeroSegmento = 0;
-    cantidadEspacios = 0;
     nombreEvento = "";
     cantidadPersonas = 0;
     segmentoSeleccionado = 0;
+    
 }
 
 Evento::~Evento() {
@@ -54,9 +54,9 @@ void Evento::generarFactura() {
     cout << "------------------------- FACTURA -------------------------\n";
     cout << "\033[0m";
     cout << "Evento: " << nombreEvento << "\n";
-    cout << "Comprador: " << venta.getNombreCliente() << "\n";
-    cout << "Cedula: " << venta.getCedulaCliente() << "\n";
-    cout << "Fecha Nacimiento: " << venta.getFechaNacimiento() << "\n";
+    cout << "Comprador: " << cliente.getNombreCliente() << "\n";
+    cout << "Cedula: " << cliente.getCedulaCliente() << "\n";
+    cout << "Fecha Nacimiento: " << cliente.getFechaNacimiento() << "\n";
 
     cout << "Desglose de las entradas vendidas:\n";
     for (int i = 0; i < numeroSegmento; i++) {
@@ -91,7 +91,7 @@ void Evento::venderEntradas() {
         cout << endl;
     }
     else {
-        venta.preguntarDatos();
+        cliente.preguntarDatos();
        
         cout << "\033[0;31m";
         cout << "\nATENCION: Puede comprar un maximo de 5 espacios.\n";
@@ -105,41 +105,40 @@ void Evento::gestionarCompra() {
     char continuaComprando;
     int contadorEspacios = 0;
     
-        do {
+    do {
 
-            imprimirEstadoDeVentas();
+        imprimirEstadoDeVentas();
 
-            segmentoSeleccionado = seleccionarSegmento();
+        segmentoSeleccionado = seleccionarSegmento();
 
-            if (noHaySegmentos == false) {
+        if (noHaySegmentos == false) {
 
-                segmentos[segmentoSeleccionado - 1].seleccionarEspacio();
-                contadorEspacios++;
+            segmentos[segmentoSeleccionado - 1].seleccionarEspacio();
+            contadorEspacios++;
 
-                if (contadorEspacios < 5) {
-                    cout << "\nDesea seguir comprando (s/n):\n ";
-                    cin >> continuaComprando;
-                    system("CLS");
-                }
-                else {
-                    cout << "\033[0;31m";
-                    cout << "\nHa alcanzado el maximo de 5 entradas permitidas \n";
-                    cout << "\033[0m";
-                    break;
-                }
+            if (contadorEspacios < 5) {
+                cout << "\nDesea seguir comprando (s/n):\n ";
+                cin >> continuaComprando;
+                system("CLS");
             }
+            else {
+                cout << "\033[0;31m";
+                cout << "\nHa alcanzado el maximo de 5 entradas permitidas \n";
+                cout << "\033[0m";
+                break;
+            }
+        }
 
 
-        } while (continuaComprando == 's' && noHaySegmentos==false);
+    } while (continuaComprando == 's' && noHaySegmentos == false || continuaComprando == 'S' && noHaySegmentos == false);
     
-
     if (procesarDescuento()) {
-        cout << "\nEl descuento se aplico exitosamente.\n";
+        cout << "\nDescuento aplicado correctamente.\n";
         descuentoAceptado = true; 
         cantidadPersonas++;
     }
     else {
-        cout << "\nNo se aplico ningun descuento.\n";
+        cout << "\nNo se aplico el descuento.\n";
         descuentoAceptado = false;
     }
 
@@ -162,7 +161,6 @@ int Evento::seleccionarSegmento() {
 
         if (segmentos[segmentoSeleccionado - 1].verificarEstadodeEntradas()) {
             cout << "\nEl segmento seleccionado esta lleno.\n";
-
 
             if (numeroSegmento > 1) {
 
@@ -197,12 +195,12 @@ bool Evento::procesarDescuento() {
             cin >> aplicarDescuento;
 
             bool contraseniaAceptada = false;
-
+            
             if (aplicarDescuento == 's' || aplicarDescuento == 'S')
             {
                 do {
 
-                    string contrasenna = descuento.getContrasenia();
+                    string contrasenna = descuento.getContrasenia(contraseniaIncorrecta);
                     cout << "\nContrasenia para validar el descuento: " << contrasenna << endl;
                     cout << "\nDigite la contrasenia para validar la compra: ";
                     cin >> digitarContrasenia;
@@ -210,33 +208,35 @@ bool Evento::procesarDescuento() {
                     if (digitarContrasenia == contrasenna) {
 
                         cout << "\nValor total con descuento aplicado. " << endl;
+
                         contraseniaAceptada = true;
+                        contraseniaIncorrecta = false;
                         return true;
 
                     }
                     else {
                         cout << "\nContrasenia incorrecta, vuelva a intentar.\n";
+                        contraseniaIncorrecta = true;
                     }
 
                 } while (contraseniaAceptada == false);
-            }
-        
+            }  
     }
 
     return false;
 }
 
-
-
 void Evento::imprimirInformacionEvento()
 {
+    int cantidadEspacios = 0;
     cout << "\033[0;33m";
     cout << "\n-------------------------------- RESUMEN DE LA IMFORMACION DEL EVENTO -------------------------------- \n";
     cout << "\033[0m";
     cout << "Evento: " << nombreEvento << "\n";
     for (int i = 0; i < numeroSegmento; i++) {
+        cantidadEspacios = segmentos[i].getFila() * segmentos[i].getColumna();
         cout << "Segmento #" << i + 1 << ": \n";
-        cout << segmentos[i].getCantidadEspacios() << " espacios (" << segmentos[i].getFila() << " filas x " << segmentos[i].getColumna() << " columnas)\n" << endl;
+        cout << cantidadEspacios << " espacios (" << segmentos[i].getFila() << " filas x " << segmentos[i].getColumna() << " columnas)\n" << endl;
         cout << "El precio por espacio es de: " << segmentos[i].getPrecio() << endl;
         cout << "------------------------------------------------------------------------------------------------------ \n";
         cout << endl << endl;
@@ -266,46 +266,59 @@ void Evento::imprimirEstadoDeVentas()
 
 void Evento::infoEstudiantes()
 {
-    const char* brenda = R"( ____                     _            _               _ _            
-| __ ) _ __ ___ _ __   _| | __ _     / \   __ _ _   _() | __ _ _ __ 
-|  _ \| '/ _ \ '_ \ / ` |/ _` |   / _ \ / _` | | | | | |/ _` | '_|
-| |) | | |  __/ | | | (| | (| |  / ___ \ (| | || | | | (| | |   
-|/||  \|| ||\,|\,| //   \\, |\,|||\,|_|   
-|  __|_  _ __  ___  ___  ___ __ _        |_/                      
-| |_ / _ \| '_ \/ __|/ _ \/ __/ _` |                                  
-|  | () | | | \__ \  _/ (| (_| |                                  
-||  \/|| ||/\|\\,|                                  )";
+    const char* brenda = R"(
+  ____                              _         
+ |  _ \                            | |        
+ | |_) |  _ __    ___   _ __     __| |   __ _ 
+ |  _ <  | '__|  / _ \ | '_ \   / _` |  / _` |
+ | |_) | | |    |  __/ | | | | | (_| | | (_| |
+ |____/  |_|     \___| |_| |_|  \__,_|  \__,_|     
+                             _   _                
+     /\                     (_) | |               
+    /  \      __ _   _   _   _  | |   __ _   _ __ 
+   / /\ \    / _` | | | | | | | | |  / _` | | '__|
+  / ____ \  | (_| | | |_| | | | | | | (_| | | |   
+ /_/    \_\  \__, |  \__,_| |_| |_|  \__,_| |_|   
+              __/ |                               
+             |___/                                     )";
+
     cout << "\033[0;35m";
     cout << brenda << endl;
     cout << "\033[0m";
-    cout << "Numero de cedula:\n";
+    cout << "Numero de cedula:1-119600030\n";
     cout << endl << endl << endl;
 
-    const char* erick = R"( _____      _      _      _____                              
-| ___| _() __| | __ |  ___|_  _ __  ___  ___  ___ __ _ 
-|  | | '| |/ __| |/ / | | / _ \| '_ \/ __|/ _ \/ __/ _` |
-| || |  | | (|   <  |  _| () | | | \__ \  _/ (| (_| |
-|||  ||\||\\ ||  \/|| ||/\|\\,|
-|  \/  | __ | | __ _                                       
-| |\/| |/ _` | __/ _` |                                      
-| |  | | (| | || (| |                                      
-||  ||\,|\\,|                                      )";
+    const char* erick = R"(
+  ______          _          _      
+ |  ____|        (_)        | |     
+ | |__     _ __   _    ___  | | __  
+ |  __|   | '__| | |  / __| | |/ /  
+ | |____  | |    | | | (__  |   <   
+ |______| |_|    |_|  \___| |_|\_\  
+  ______                                             
+ |  ____|                                            
+ | |__      ___    _ __    ___    ___    ___    __ _ 
+ |  __|    / _ \  | '_ \  / __|  / _ \  / __|  / _` |
+ | |      | (_) | | | | | \__ \ |  __/ | (__  | (_| |
+ |_|       \___/  |_| |_| |___/  \___|  \___|  \__,_|                                        )";
     cout << "\033[0;34m";
     cout << erick << endl;
     cout << "\033[0m";
-    cout << "Numero de cedula: \n";
+    cout << "Numero de cedula: 1-19380881 \n";
 
 
 }
 
 void Evento::mostrarLogo()
 {
-    const char* logo = R"( _____                 _              _____                   _         
-| ____| _____ _ __ | |_ ___  ___  |  ___|  __ _  __ _ _ __(_) __ _  
-|  _| \ \ / / _ \ '_ \| _/ _ \/ __| | |_   / _` |/ _` | '__| |/ _` | 
-| |___ \ V /  __/ | | | || (_) \__ \ |  _| | (_| | (_| | |  | | (_| | 
-|_____| \_/ \___|_| |_|_|\___/|___/ |_|    \__, |\__, |_|  |_|\__,_| 
-                                          |___/ |___/               )";
+    const char* logo = R"(
+  ______                          _                     ______                 _                   
+ |  ____|                        | |                   |  ____|               (_)                  
+ | |__    __   __   ___   _ __   | |_    ___    ___    | |__     _   _   ___   _    ___    _ __    
+ |  __|   \ \ / /  / _ \ | '_ \  | __|  / _ \  / __|   |  __|   | | | | / __| | |  / _ \  | '_ \   
+ | |____   \ V /  |  __/ | | | | | |_  | (_) | \__ \   | |      | |_| | \__ \ | | | (_) | | | | |  
+ |______|   \_/    \___| |_| |_|  \__|  \___/  |___/   |_|       \__,_| |___/ |_|  \___/  |_| |_|                     
+    )";
     cout << "\033[0;32m";
     cout << logo;
     cout << "\033[0m";
