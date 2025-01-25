@@ -9,9 +9,12 @@ private:
 	string nombreCliente;
 	string cedulaCliente;
 	string fechaNacimiento;
+	int dia, mes, anio;
+	
+
 public:
 	string getNombreCliente();
 	string getCedulaCliente();
-	string getFechaNacimiento();
+	string getFechaNacimiento(); 
 	void preguntarDatos();
 };

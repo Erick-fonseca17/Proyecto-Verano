@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Lista.h"
 
 using namespace std;
 
@@ -12,9 +13,10 @@ private:
 	int cantidad;
 	string contrasenia;
 	float precioActual;
-
-	string* vecContrasenia;
-	int contadorContrasenia = 0;
+	bool descuentoConfigurado;
+	bool cantidadPersonasDescuento= false;
+	Lista lista;
+	
 
 public:
 
@@ -24,11 +26,16 @@ public:
 	void setContrasenia(string contrasenia);
 
 	int getCantidad();
-	string getContrasenia(bool estadoContrasenia);
+	string getContrasenia();
 
 	string generarContrasenia();
+	void IngresarDatosdelEvento();
+	void getDescuentos();
+	bool getCantidadPersonas();
+	void setCantidadPersonas(bool cantidadPersonas); 
+	bool listaDescuento(string codigo);
 	void confirmarDescuento(float precioSegmento);
 	float aplicarDescuento();
-	void IngresarDatosdelEvento();
+	
 
 };

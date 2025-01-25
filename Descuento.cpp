@@ -5,7 +5,6 @@ Descuento::Descuento()
     porcentaje = 0;
     cantidad = 0;
     contrasenia = " ";
-    vecContrasenia = NULL;
     srand(time(0));
 }
 
@@ -24,14 +23,8 @@ int Descuento::getCantidad()
     return cantidad;
 }
 
-string Descuento::getContrasenia(bool estadoContrasenia)
+string Descuento::getContrasenia()
 {
-    
-    if (estadoContrasenia == false) {
-
-        contadorContrasenia++;// se incrementa para que en cada vuelta del metodo use la contraseña siguiente
-    }
-    contrasenia = vecContrasenia[contadorContrasenia]; // se asigna la contraseña almacenda en el vector
 
     return contrasenia; 
 }
@@ -64,8 +57,40 @@ string Descuento::generarContrasenia()
         contraseniaGenerada += caracter[indice];
     }
 
+    contrasenia = contraseniaGenerada;
+
     return contraseniaGenerada;
 
+}
+
+void Descuento::getDescuentos()
+{
+    if (descuentoConfigurado) {
+
+        char opcion;
+        cout << "Ya existe un descuento configurado:\n";
+        cout << "Porcentaje actual: " << porcentaje << "%, Cantidad de uso: " << cantidad << "\n";
+        cout << "Desea actualizar este descuento? (s/n): ";
+        cin >> opcion;
+       
+        if (opcion == 'n' || opcion == 'N') {
+            cout << "No se actualizara el descuento.\n";
+            return;
+        }
+        else {
+           
+            IngresarDatosdelEvento();
+            cantidadPersonasDescuento = true; 
+
+        }
+    }
+
+    else {
+        IngresarDatosdelEvento();
+        descuentoConfigurado = true;
+    }
+
+  
 }
 
 void Descuento::IngresarDatosdelEvento()
@@ -82,37 +107,43 @@ void Descuento::IngresarDatosdelEvento()
         cout << "Error: El porcentaje debe estar entre 0 y 100.\n\n";
         cout << "\033[0m";
     }
-    
 
-    cout << "Ingrese la cantidad de personas que se les aplicara el cupon de descuento: ";
+    cout << "Ingrese la cantidad de veces que se puede aplicar el cupon: ";
     cin >> cantidad;
 
-    vecContrasenia = new string[cantidad];
-    
     if (cantidad < 0)
     {
         cout << "\033[0;31m";
         cout << "Error: La cantidad debe ser un número positivo\n\n";
         cout << "\033[0m";
     }
-  
+    string contra = generarContrasenia(); // se asigna la contraseña generada a contra
+    lista.insertarFinal();
+
     cout << "\nDetalles del Descuento:\n";
     cout << "Porcentaje: " << porcentaje << "%\n";
-    cout << "Cantidad de personas: " << cantidad << "\n";
+    cout << "Cantidad de uso: " << cantidad << "\n";
 
-    for (int i = 0; i < cantidad; i++)
-    {
-        string contra = generarContrasenia(); // se asigna la contraseña generada a contra
-
-        vecContrasenia[i] = contra;// se guarda la contraseña de contra en el vector dinamico 
-
-        cout << "Cupon " << (i + 1) << ": " << vecContrasenia[i] << "\n"; // muestra las contraseñas de cada cupon 
-        
-    }
-
+ 
+    cout << "Cupon: " << contra << "\n"; // muestra las contraseñas de cada cupon      
     cout << "\033[0m";
 }
 
+bool Descuento::getCantidadPersonas()
+{
+    return cantidadPersonasDescuento;
+}
+
+void Descuento::setCantidadPersonas(bool cantidadPersonas)
+{
+    cantidadPersonasDescuento = cantidadPersonas;
+}
+
+bool Descuento::listaDescuento(string codigo)
+{
+    Nodo* nodo = lista.buscarElemento();
+    return false;
+}
 
 void Descuento::confirmarDescuento(float precioTotal)
 {

@@ -1,6 +1,7 @@
 #include "Evento.h"
 #include "Segmento.h"
 
+
 Evento::Evento() {
     segmentos = NULL;
     numeroSegmento = 0;
@@ -44,44 +45,6 @@ void Evento::configurarEvento() {
         system("CLS");
     }
 }
-//Aplicar descuento a la factura
-void Evento::generarFactura() {
-    float totalPagar = 0;
-    int entradas = 0;
-    float precioSegmento = 0.0;
-    float subtotal = 0.0;
-    cout << "\033[0;33m";
-    cout << "------------------------- FACTURA -------------------------\n";
-    cout << "\033[0m";
-    cout << "Evento: " << nombreEvento << "\n";
-    cout << "Comprador: " << cliente.getNombreCliente() << "\n";
-    cout << "Cedula: " << cliente.getCedulaCliente() << "\n";
-    cout << "Fecha Nacimiento: " << cliente.getFechaNacimiento() << "\n";
-
-    cout << "Desglose de las entradas vendidas:\n";
-    for (int i = 0; i < numeroSegmento; i++) {
-        entradas = segmentos[i].getEntradasPorUsuario();
-        if (entradas > 0) {
-            precioSegmento = segmentos[i].getPrecio();
-            subtotal = entradas * precioSegmento;
-
-            cout << "Segmento #" << i + 1 << ":\n";
-            cout << "  Entradas vendidas: " << entradas << "\n";
-            cout << "  Precio por entrada: " << precioSegmento << " colones\n";
-            cout << "  Subtotal: " << subtotal << " colones\n";
-            segmentos[i].inicializarEntradasPorUsurio();
-
-            totalPagar += subtotal;
-        }
-    }
-
-    descuento.confirmarDescuento(totalPagar);
-    cout << "\nTOTAL A PAGAR: " << totalPagar << " colones\n";
-    if (descuentoAceptado == true) {
-        cout << "TOTAL A PAGAR CON DESCUENTO: " << descuento.aplicarDescuento() << " colones\n";
-    }
-    cout << "----------------------------------------------------------\n";
-}
 
 void Evento::venderEntradas() {
     if (!segmentos) {
@@ -91,6 +54,7 @@ void Evento::venderEntradas() {
         cout << endl;
     }
     else {
+
         cliente.preguntarDatos();
        
         cout << "\033[0;31m";
@@ -189,8 +153,17 @@ bool Evento::procesarDescuento() {
     string digitarContrasenia;
     char aplicarDescuento;
 
-    if (cantidadPersonas < descuento.getCantidad()) {
-   
+    int cantidad = descuento.getCantidad();
+
+    if (descuento.getCantidadPersonas() == true) {
+        cantidadPersonas = 0;
+
+        bool reinicioPersonas = false; 
+        descuento.setCantidadPersonas(reinicioPersonas);
+    }
+
+    if (cantidadPersonas < cantidad){
+
             cout << "\nDesea aplicar descuento (s/n): ";
             cin >> aplicarDescuento;
 
@@ -200,7 +173,7 @@ bool Evento::procesarDescuento() {
             {
                 do {
 
-                    string contrasenna = descuento.getContrasenia(contraseniaCondicion);
+                    string contrasenna = descuento.getContrasenia();
                     cout << "\nContrasenia para validar el descuento: " << contrasenna << endl;
                     cout << "\nDigite la contrasenia para validar la compra: ";
                     cin >> digitarContrasenia;
@@ -208,15 +181,16 @@ bool Evento::procesarDescuento() {
                     if (digitarContrasenia == contrasenna) {
 
                         cout << "\nValor total con descuento aplicado. " << endl;
+                        
 
                         contraseniaAceptada = true;
-                        contraseniaCondicion = false;
+                    
                         return true;
 
                     }
                     else {
                         cout << "\nContrasenia incorrecta, vuelva a intentar.\n";
-                        contraseniaCondicion = true;
+                        
                     }
 
                 } while (contraseniaAceptada == false);
@@ -242,6 +216,45 @@ void Evento::imprimirInformacionEvento()
         cout << endl << endl;
     }
 
+}
+
+//Aplicar descuento a la factura
+void Evento::generarFactura() {
+    float totalPagar = 0;
+    int entradas = 0;
+    float precioSegmento = 0.0;
+    float subtotal = 0.0;
+    cout << "\033[0;33m";
+    cout << "------------------------- FACTURA -------------------------\n";
+    cout << "\033[0m";
+    cout << "Evento: " << nombreEvento << "\n";
+    cout << "Comprador: " << cliente.getNombreCliente() << "\n";
+    cout << "Cedula: " << cliente.getCedulaCliente() << "\n";
+    cout << "Fecha Nacimiento: " << cliente.getFechaNacimiento() << "\n";
+
+    cout << "Desglose de las entradas vendidas:\n";
+    for (int i = 0; i < numeroSegmento; i++) {
+        entradas = segmentos[i].getEntradasPorUsuario();
+        if (entradas > 0) {
+            precioSegmento = segmentos[i].getPrecio();
+            subtotal = entradas * precioSegmento;
+
+            cout << "Segmento #" << i + 1 << ":\n";
+            cout << "  Entradas vendidas: " << entradas << "\n";
+            cout << "  Precio por entrada: " << precioSegmento << " colones\n";
+            cout << "  Subtotal: " << subtotal << " colones\n";
+            segmentos[i].inicializarEntradasPorUsurio();
+
+            totalPagar += subtotal;
+        }
+    }
+
+    descuento.confirmarDescuento(totalPagar);
+    cout << "\nTOTAL A PAGAR: " << totalPagar << " colones\n";
+    if (descuentoAceptado == true) {
+        cout << "TOTAL A PAGAR CON DESCUENTO: " << descuento.aplicarDescuento() << " colones\n";
+    }
+    cout << "----------------------------------------------------------\n";
 }
 
 void Evento::imprimirEstadoDeVentas()
