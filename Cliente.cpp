@@ -30,6 +30,19 @@ string Cliente::getFechaNacimiento()
 
 	return fecha;
 }
+
+bool Cliente::validarCedula()
+{
+	for (int i = 0; i < 8; i++) {
+		char c = cedulaCliente[i];
+		// Comprobar si el carácter es un dígito o una letra
+		if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')) {
+			return false;
+		}
+	}
+
+	return true;
+}
  
 void Cliente::preguntarDatos()
 {
@@ -42,8 +55,15 @@ void Cliente::preguntarDatos()
 	cout << "Nombre completo: " << endl;
 	cin.ignore();
 	getline(cin, nombreCliente);
-	cout << "Numero de cedula: " << endl;
-	cin >> cedulaCliente;
+
+	do {
+		cout << "Numero de cedula: " << endl;
+		cin >> cedulaCliente;
+		if (!validarCedula()) {
+			cout << "Cedula incorrecta...\n";
+		}
+	} while (!validarCedula());
+
 	cout << "Ingrese la fecha de nacimiento por numeros.\n" << endl;
 	cout << "Dia:" << endl;
 	cin >> dia;

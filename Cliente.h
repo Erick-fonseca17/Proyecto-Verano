@@ -11,10 +11,10 @@ private:
 	string fechaNacimiento;
 	int dia, mes, anio;
 	
-
 public:
 	string getNombreCliente();
 	string getCedulaCliente();
 	string getFechaNacimiento(); 
+	bool validarCedula();
 	void preguntarDatos();
 };

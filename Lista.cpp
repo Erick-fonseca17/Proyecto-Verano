@@ -1,94 +1,80 @@
-#include "Lista.h"
-
-Lista::Lista(float elem):elemento(elem),cabeza(nullptr), cola(nullptr) {}
-
- Lista:: ~Lista() {
-     while (cabeza) {
-         Nodo* temp = cabeza;
-         cabeza = cabeza->siguiente;
-         delete temp;
-     }
-     cola = nullptr;
- }
-
-
- void Lista:: insertarInicio()
- {
-     Nodo* nuevoNodo = new Nodo(elemento);
-
-     if (cabeza) {
-         cabeza->anterior = nuevoNodo;
-     }
-     else {
-         cola = nuevoNodo;
-     }
-     cabeza = nuevoNodo;
- }
-
- 
- void Lista::insertarFinal()
- {
-     Nodo* nuevoNodo = new Nodo(elemento);
-     if (cola) {
-         cola->siguiente = nuevoNodo;
-     }
-     else {
-         cabeza = nuevoNodo;
-     }
-     cola = nuevoNodo;
-
- }
-
- Lista::Nodo* Lista::buscarElemento()
- {
-     Nodo* actual = cabeza;
-
-     while (actual) {
-
-         if (actual->valor == elemento) {
-
-             return actual;
-         }
-
-         actual = actual->siguiente;
-     }
-
-     return nullptr;
- }
-
- bool Lista::eliminarElemento()
- {
-     if (cabeza->valor == elemento) {
-
-         Nodo* aux = cabeza;
-         cabeza = cabeza->siguiente;
-         delete aux;
-         return true;
-     }
-
-     Nodo* elementoActual = cabeza;
-     while (elementoActual->siguiente) {
-
-         if (elementoActual->siguiente->valor == elemento) {
-
-             Nodo* aux = elementoActual->siguiente;
-             elementoActual->siguiente = elementoActual->siguiente->siguiente;
-             delete aux;
-             return true;
-         }
-         elementoActual = elementoActual->siguiente;
-     }
-
-     return false;
- }
-
- void Lista ::mostratLista()
- {
-     Nodo* actual = cabeza;
-     while (actual) {
-         cout << actual->valor << " ";
-         actual = actual->siguiente;
-     }
-     cout << endl;
- }
-
+//#pragma once
+//#include "Lista.h"
+//
+//template <typename T>
+//Lista<T>::Lista() : cabeza(nullptr) {}
+//
+//template <typename T>
+//Lista<T>::~Lista() { limpiar(); }
+//
+//template <typename T>
+//void Lista<T>::insertar(T valor) {
+//    Nodo<T>* nuevoNodo = new Nodo<T>(valor);
+//    if (!cabeza) {
+//        cabeza = nuevoNodo;
+//    }
+//    else {
+//        Nodo<T>* temp = cabeza;
+//        while (temp->getSiguiente()) {
+//            temp = temp->getSiguiente();
+//        }
+//        temp->setSiguiente(nuevoNodo);
+//    }
+//}
+//
+//template <typename T>
+//void Lista<T>::eliminar(T valor) {
+//    if (!cabeza) {
+//        cout << "Lista vacia..." << endl;
+//        return;
+//    }
+//    if (cabeza->getValor() == valor) {
+//        Nodo<T>* temp = cabeza;
+//        cabeza = cabeza->getSiguiente();
+//        delete temp;
+//        return;
+//    }
+//    Nodo<T>* temp = cabeza;
+//    while (temp->getSiguiente() && temp->getSiguiente()->getValor() != valor) {
+//        temp = temp->getSiguiente();
+//    }
+//    if (temp->getSiguiente()) {
+//        Nodo<T>* nodoEliminar = temp->getSiguiente();
+//        temp->setSiguiente(nodoEliminar->getSiguiente());
+//        delete nodoEliminar;
+//    }
+//}
+//
+//template <typename T>
+//void Lista<T>::imprimir() {
+//    if (!cabeza) {
+//        cout << "Lista vacia" << endl;
+//        return;
+//    }
+//    Nodo<T>* temp = cabeza;
+//    while (temp) {
+//        cout << temp->getValor() << " ";
+//        temp = temp->getSiguiente();
+//    }
+//    cout << endl;
+//}
+//
+//template <typename T>
+//Nodo<T>* Lista<T>::buscar(T valor) {
+//    Nodo<T>* temp = cabeza;
+//    while (temp) {
+//        if (temp->getValor() == valor)
+//            return temp;
+//        temp = temp->getSiguiente();
+//    }
+//    return nullptr;
+//}
+//
+//template <typename T>
+//void Lista<T>::limpiar() {
+//    while (cabeza) {
+//        Nodo<T>* temp = cabeza;
+//        cabeza = cabeza->getSiguiente();
+//        delete temp;
+//    }
+//}

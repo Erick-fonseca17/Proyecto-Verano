@@ -1,8 +1,116 @@
 ﻿  Descuento.cpp
 C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(8,15): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
-C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(153,39): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(143,56): warning C4244: 'argumento': conversión de 'T' a 'float'; posible pérdida de datos
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(149,54): warning C4244: 'argumento': conversión de 'T' a 'float'; posible pérdida de datos
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(156,51): warning C4244: 'argumento': conversión de 'T' a 'float'; posible pérdida de datos
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(177,102): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(177,81): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(179,105): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(179,84): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(201,97): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(201,76): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(203,42): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(285,59): warning C4244: 'argumento': conversión de 'T' a 'float'; posible pérdida de datos
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(290,57): warning C4244: 'argumento': conversión de 'T' a 'float'; posible pérdida de datos
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Descuento.cpp(327,39): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
   Evento.cpp
-  Lista.cpp
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(79,104): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(79,83): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(82,111): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(82,90): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(85,102): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(85,81): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(436,42): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(448,98): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(448,79): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(459,102): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\Evento.cpp(459,81): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+  ListaCupon.cpp
+  NodoCupon.cpp
   Proyecto Programcion 1 verano.cpp
   Generando código...
   Proyecto Programcion 1 verano.vcxproj -> C:\Users\fonse\OneDrive\Escritorio\I_PROYECTO_baguilar_efonseca\x64\Debug\Proyecto Programcion 1 verano.exe

@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "Lista.h"
-
+#include <SFML/Graphics.hpp>
 using namespace std;
+using namespace sf;
+
 
 class Descuento
 {
@@ -15,25 +16,25 @@ private:
 	float precioActual;
 	bool descuentoConfigurado;
 	bool cantidadPersonasDescuento= false;
-	Lista lista;
-	
+
 
 public:
-
+	Descuento(string contrasenia,int cantidad,int porcentaje):contrasenia(contrasenia),cantidad(cantidad),porcentaje(porcentaje){}
 	Descuento();
 
 	void setCantidad(int cantidad);
 	void setContrasenia(string contrasenia);
 
 	int getCantidad();
+	int getPorcentaje();
 	string getContrasenia();
 
 	string generarContrasenia();
-	void IngresarDatosdelEvento();
+	void menuDescuento(RenderWindow & window, Font& font);
+	void IngresarDatosdelEvento(sf::RenderWindow& window, sf::Font& font);
 	void getDescuentos();
 	bool getCantidadPersonas();
 	void setCantidadPersonas(bool cantidadPersonas); 
-	bool listaDescuento(string codigo);
 	void confirmarDescuento(float precioSegmento);
 	float aplicarDescuento();
 	

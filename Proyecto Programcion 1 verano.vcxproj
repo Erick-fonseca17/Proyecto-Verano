@@ -133,6 +133,9 @@
     <ClCompile Include="Descuento.cpp" />
     <ClCompile Include="Evento.cpp" />
     <ClCompile Include="Lista.cpp" />
+    <ClCompile Include="ListaCupon.cpp" />
+    <ClCompile Include="Nodo.cpp" />
+    <ClCompile Include="NodoCupon.cpp" />
     <ClCompile Include="Proyecto Programcion 1 verano.cpp" />
     <ClCompile Include="Segmento.cpp" />
     <ClCompile Include="Cliente.cpp" />
@@ -141,6 +144,9 @@
     <ClInclude Include="Descuento.h" />
     <ClInclude Include="Evento.h" />
     <ClInclude Include="Lista.h" />
+    <ClInclude Include="ListaCupon.h" />
+    <ClInclude Include="Nodo.h" />
+    <ClInclude Include="NodoCupon.h" />
     <ClInclude Include="Segmento.h" />
     <ClInclude Include="Cliente.h" />
   </ItemGroup>
